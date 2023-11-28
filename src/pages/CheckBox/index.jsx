@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-const colorArray = ["azul", "roxo", "laranja", "verde", "vermelho", "cinza"];
+const colorArray = ['azul', 'roxo', 'laranja', 'verde', 'vermelho', 'cinza'];
 
 const CheckBox = () => {
   const [color, setColor] = React.useState([]);
@@ -18,16 +18,16 @@ const CheckBox = () => {
   return (
     <form
       style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100px",
-        margin: "200px",
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100px',
+        margin: '200px',
       }}
     >
       {colorArray.map((c) => (
         <label key={c}>
           <input
-            type="checkbox"
+            type='checkbox'
             value={c}
             checked={color.includes(c)}
             onChange={handleChange}
