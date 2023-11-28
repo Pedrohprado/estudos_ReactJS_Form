@@ -3,6 +3,19 @@
   padding: 0px;
   box-sizing: border-box;
 
-  font-family: sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 16px;
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    flex-direction: column;
+  }
 }
