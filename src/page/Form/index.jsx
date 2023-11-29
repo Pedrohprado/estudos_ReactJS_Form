@@ -14,8 +14,40 @@ const Form = () => {
   const { name, setName, card, setCard, sector, setSector } =
     React.useContext(GlobalContext);
 
+  const [error, setError] = React.useState(null);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    if (validateCard(card)) {
+      console.log('enviado');
+    } else {
+      console.log('não enviado');
+    }
+  }
+
+  function validateCard(value) {
+    console.log(value);
+
+    if (value.length === 0) {
+      setError('Preencha um valor no cartão');
+      return false;
+    } else if (!/^\d{4}$/.test(value)) {
+      setError('Utilize 4 digitos do cartão!');
+      return false;
+    } else {
+      console.log('entrou');
+
+      setError(null);
+      return true;
+    }
+  }
+
+  function handleBlur({ target }) {
+    validateCard(target.value);
+  }
+
   return (
-    <FormContainer>
+    <FormContainer onSubmit={handleSubmit}>
       <FormTitle>Crie sua conta</FormTitle>
       <FormSubTitle>Informe os dados</FormSubTitle>
       <FormContainerInputs>
@@ -28,18 +60,20 @@ const Form = () => {
         <InputForm
           value={card}
           setValue={setCard}
-          type={'text'}
+          type={'number'}
           label={'Cartão'}
+          handleBlur={handleBlur}
         />
         <InputForm
           value={sector}
           setValue={setSector}
-          type={'text'}
+          type={'number'}
           label={'Setor'}
         />
       </FormContainerInputs>
 
       <FormButton>CADASTRAR</FormButton>
+      {error}
     </FormContainer>
   );
 };
