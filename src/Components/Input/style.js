@@ -18,6 +18,11 @@ export const InputLabel = styled.label`
   border-radius: 7px;
 
   cursor: pointer;
+
+  @media screen and (max-width: 700px) {
+    width: 100%;
+    font-size: 0.9rem;
+  }
 `;
 
 export const InputMain = styled.input`
