@@ -10,7 +10,14 @@ export const GlobalForm = ({ children }) => {
 
   return (
     <GlobalContext.Provider
-      value={{ name, setName, card, setCard, sector, setSector }}
+      value={{
+        name,
+        setName,
+        card,
+        setCard,
+        sector,
+        setSector,
+      }}
     >
       {children}
     </GlobalContext.Provider>

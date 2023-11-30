@@ -1,8 +1,17 @@
 /* eslint-disable react/prop-types */
 import { InputLabel, InputMain } from './style';
 import { FaRegAddressCard, FaPerson, FaIndustry } from 'react-icons/fa6';
-const InputForm = ({ value, setValue, type, label, handleBlur }) => {
+const InputForm = ({
+  value,
+  setValue,
+  type,
+  label,
+  handleBlur,
+  error,
+  validateCard,
+}) => {
   function handleChange({ target }) {
+    if (error) validateCard(target.value);
     setValue(target.value);
   }
 
