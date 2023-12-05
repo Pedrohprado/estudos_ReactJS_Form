@@ -9,6 +9,7 @@ const InputForm = ({
   handleBlur,
   error,
   validateCard,
+  req,
 }) => {
   function handleChange({ target }) {
     if (error) validateCard(target.value);
@@ -27,6 +28,7 @@ const InputForm = ({
 
       {label}
       <InputMain
+        required={req ? true : false}
         onBlur={handleBlur}
         type={type}
         value={value}
