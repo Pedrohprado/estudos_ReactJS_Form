@@ -8,6 +8,9 @@ import {
   FormSubTitle,
   FormContainerInputs,
   FormButton,
+  AlertForm,
+  LinkForLogin,
+  Information,
 } from './style';
 
 const Form = () => {
@@ -20,14 +23,14 @@ const Form = () => {
 
   React.useEffect(() => {
     let timer = null;
-    if (sucess) {
+    if (sucess || register) {
       timer = setTimeout(() => {
         setSucess(false);
-        console.log('timer');
-      }, 3000);
+        setRegister(false);
+      }, 5000);
     }
     return () => clearTimeout(timer);
-  }, [sucess]);
+  }, [sucess, register]);
 
   async function createNewUser() {
     const response = await fetch('http://localhost:3000/funcionarios/', {
@@ -54,6 +57,8 @@ const Form = () => {
         .then((response) => response.json())
         .then((data) => {
           const equili = data;
+          //NOTES: I put condition direct in function verication
+          //but i could return True or False for exist card in the database or not, and continue validation from then
           if (equili.length >= 1) {
             setRegister(true);
           } else {
@@ -92,9 +97,11 @@ const Form = () => {
 
   return (
     <FormContainer onSubmit={handleSubmit}>
-      {register ? <p>Usuário já cadastrado</p> : null}
-      {sucess ? <p>Cadastro realizado com sucesso</p> : ''}
-      {error ? <p>{error}</p> : null}
+      {register ? (
+        <AlertForm color='#A75D5D'>Usuário já cadastrado</AlertForm>
+      ) : null}
+      {sucess ? <AlertForm color='#435334'>Cadastro realizado!</AlertForm> : ''}
+      {error ? <AlertForm color='#A75D5D'>{error}</AlertForm> : null}
       <FormTitle>Crie sua conta</FormTitle>
       <FormSubTitle>Informe os dados</FormSubTitle>
       <FormContainerInputs>
@@ -122,6 +129,9 @@ const Form = () => {
       </FormContainerInputs>
 
       <FormButton>CADASTRAR</FormButton>
+      <Information>
+        Já tem cadastro? <LinkForLogin to={'/login'}>Clique aqui</LinkForLogin>
+      </Information>
     </FormContainer>
   );
 };

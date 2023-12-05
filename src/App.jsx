@@ -1,17 +1,31 @@
 import './App.css';
 import { GlobalForm } from './context/context-form';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import MoveLogin from './Components/MoveLogin';
+import MoveLogin from './page/MoveLogin';
 import Form from './page/Form';
+import Login from './page/Login';
 
 const App = () => {
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <MoveLogin />,
+    },
+    {
+      path: '/login',
+      element: <Login />,
+    },
+    {
+      path: '/createdacount',
+      element: <Form />,
+    },
+  ]);
+
   return (
     <>
       <GlobalForm>
-        <div className='container'>
-          <MoveLogin />
-          <Form />
-        </div>
+        <RouterProvider router={router} />
       </GlobalForm>
     </>
   );

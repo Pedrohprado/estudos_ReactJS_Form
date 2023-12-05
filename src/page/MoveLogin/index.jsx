@@ -12,10 +12,13 @@ const MoveLogin = () => {
       <LoginTitleInk>INK. Tec</LoginTitleInk>
 
       <LoginSubTitleInk>Bem vindo de volta!</LoginSubTitleInk>
-      <LoginAcessTitleInk>Acesse sua conta</LoginAcessTitleInk>
+      <LoginAcessTitleInk>
+        Acesse sua conta ou faça o cadastro!
+      </LoginAcessTitleInk>
 
       <InkSectionLogin>
-        <InkButton>ENTRAR</InkButton>
+        <InkButton to={'/login'}>ENTRAR</InkButton>
+        <InkButton to={'/createdacount'}>CRIAR CONTA</InkButton>
       </InkSectionLogin>
     </ContainerInk>
   );
