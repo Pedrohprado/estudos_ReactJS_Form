@@ -8,23 +8,23 @@ const Login = () => {
 
   async function verifyLogin() {
     console.log('teste');
-    try {
-      await fetch(`http://localhost:3000/logar/${name}?${card}?${sector}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          nome: name,
-          cartao: card,
-          setor: sector,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
-    } catch (erro) {
-      console.log(erro);
-    }
+    // try {
+    //   await fetch(`http://localhost:3000/logar/${name}?${card}?${sector}`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       nome: name,
+    //       cartao: card,
+    //       setor: sector,
+    //     }),
+    //   })
+    //     .then((response) => response.json())
+    //     .then((data) => console.log(data));
+    // } catch (erro) {
+    //   console.log(erro);
+    // }
   }
 
   const handleSubmit = (event) => {
