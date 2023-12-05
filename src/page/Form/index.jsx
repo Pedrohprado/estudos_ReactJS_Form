@@ -16,7 +16,7 @@ const Form = () => {
 
   const [sucess, setSucess] = React.useState(false);
   const [error, setError] = React.useState(null);
-  const [register, setRegister] = React.useState([]);
+  const [register, setRegister] = React.useState(null);
 
   React.useEffect(() => {
     let timer = null;
@@ -29,24 +29,23 @@ const Form = () => {
     return () => clearTimeout(timer);
   }, [sucess]);
 
-  // async function createNewUser() {
-  //   const response = await fetch('http://localhost:3000/funcionarios/', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       nome: name,
-  //       cartao: card,
-  //       setor: sector,
-  //     }),
-  //   });
-  //   setSucess(response.ok);
-  // }
+  async function createNewUser() {
+    const response = await fetch('http://localhost:3000/funcionarios/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        nome: name,
+        cartao: card,
+        setor: sector,
+      }),
+    });
+    setSucess(response.ok);
+  }
 
   const checkNewUser = async () => {
     try {
-      console.log('entrou');
       await fetch(`http://localhost:3000/funcionarios/${card}`, {
         headers: {
           'Content-Type': 'application/json',
@@ -54,9 +53,13 @@ const Form = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          const d = JSON.stringify(data);
-          setRegister([...register, d]);
-          console.log(register);
+          const equili = data;
+          if (equili.length >= 1) {
+            setRegister(true);
+          } else {
+            createNewUser();
+            setRegister(false);
+          }
         });
     } catch (erro) {
       console.log(erro);
@@ -66,10 +69,7 @@ const Form = () => {
   async function handleSubmit(event) {
     event.preventDefault();
     if (validateCard(card)) {
-      checkNewUser();
-      if (register.length > 0) {
-        console.log('usuario existente');
-      }
+      await checkNewUser();
     }
   }
 
@@ -92,6 +92,7 @@ const Form = () => {
 
   return (
     <FormContainer onSubmit={handleSubmit}>
+      {register ? <p>Usuário já cadastrado</p> : null}
       {sucess ? <p>Cadastro realizado com sucesso</p> : ''}
       {error ? <p>{error}</p> : null}
       <FormTitle>Crie sua conta</FormTitle>
@@ -120,7 +121,7 @@ const Form = () => {
         />
       </FormContainerInputs>
 
-      <FormButton onClick={checkNewUser}>CADASTRAR</FormButton>
+      <FormButton>CADASTRAR</FormButton>
     </FormContainer>
   );
 };
