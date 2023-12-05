@@ -16,7 +16,7 @@ const Form = () => {
 
   const [sucess, setSucess] = React.useState(false);
   const [error, setError] = React.useState(null);
-  const [register, setRegister] = React.useState(null);
+  const [register, setRegister] = React.useState([]);
 
   React.useEffect(() => {
     let timer = null;
@@ -44,30 +44,33 @@ const Form = () => {
   //   setSucess(response.ok);
   // }
 
-  async function checkNewUser() {
+  const checkNewUser = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/funcionarios/${card}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      setRegister(response.status);
+      console.log('entrou');
+      await fetch(`http://localhost:3000/funcionarios/${card}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const d = JSON.stringify(data);
+          setRegister([...register, d]);
+          console.log(register);
+        });
     } catch (erro) {
       console.log(erro);
     }
-  }
+  };
 
   async function handleSubmit(event) {
     event.preventDefault();
     if (validateCard(card)) {
-      await checkNewUser();
+      checkNewUser();
+      if (register.length > 0) {
+        console.log('usuario existente');
+      }
     }
-
-    console.log(register);
   }
 
   function validateCard(value) {
@@ -89,7 +92,6 @@ const Form = () => {
 
   return (
     <FormContainer onSubmit={handleSubmit}>
-      {register === 200 ? 'Usuaário já cadastrado' : 'não registradoo'}
       {sucess ? <p>Cadastro realizado com sucesso</p> : ''}
       {error ? <p>{error}</p> : null}
       <FormTitle>Crie sua conta</FormTitle>
@@ -118,7 +120,7 @@ const Form = () => {
         />
       </FormContainerInputs>
 
-      <FormButton>CADASTRAR</FormButton>
+      <FormButton onClick={checkNewUser}>CADASTRAR</FormButton>
     </FormContainer>
   );
 };
